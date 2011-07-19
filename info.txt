@@ -1,0 +1,21 @@
+title: Social Authentication
+desc: Allow users to create an account and to login using their OpenID (e.g. Google or Yahoo) or oAuth (e.g. Facebook or Twitter) accounts that are hosted by third party websites.
+author: Maurice Makaay
+version: 1.0.0
+require_version: 5.3.0
+category: integration
+dbversion: 2010110601
+
+hook: lang|
+hook: login_custom_action|phorum_mod_social_authentication_login_custom_action
+hook: user_authenticate|phorum_mod_social_authentication_user_authenticate
+hook: before_footer_login|phorum_mod_social_authentication_before_footer_login
+hook: url_build|phorum_mod_social_authentication_url_build
+hook: parse_request|phorum_mod_social_authentication_parse_request
+hook: css_register|phorum_mod_social_authentication_css_register
+hook: javascript_register|phorum_mod_social_authentication_javascript_register
+hook: ajax_social_authentication|phorum_mod_social_authentication_ajax
+hook: user_delete|phorum_mod_social_authentication_user_delete
+
+priority: run hook before_footer_login before *
+

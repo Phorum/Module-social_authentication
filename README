@@ -1,9 +1,8 @@
-Module  : Social Authentication
-Version : 1.0.0
+Module  : @TITLE@
+Version : @VERSION@
 Authors : Maurice Makaay
 
-This module provides OpenID (e.g. Google, Yahoo) and oAuth (Twitter, Facebook)
-authentication support for Phorum.
+@DESCRIPTION@
 
 
 1. Installation:
@@ -11,11 +10,11 @@ authentication support for Phorum.
 
   - Unpack the archive;
 
-  - Move the directory "social_authentication" to the directory "mods"
+  - Move the directory "@MODULE_ID@" to the directory "mods"
     within your Phorum installation;
 
   - Login as administrator in Phorum's administrative interface and
     go to the "Modules" section;
 
-  - Enable the module "Social Authentication".
+  - Enable the module "@TITLE@".
 

@@ -34,7 +34,7 @@ if ($provider['gui']['type'] == 'username') {
  *
  * @var array
  */
-// TODO use data from provider eini-files
+// TODO use data from provider ini-files
 $openid_map = array
 (
     // gmail.com e-mail addresses.

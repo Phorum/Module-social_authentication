@@ -19,6 +19,17 @@ if ($response->status == Auth_OpenID_CANCEL) {
 // Check if the authentication failed.
 if ($response->status == Auth_OpenID_FAILURE) {
     $data['error'] = $lang['ErrFailed'];
+
+    if (function_exists('event_logging_writelog')) {
+        event_logging_writelog(array(
+            "source"    => "social_authentication",
+            "message"   => "OpenID authentication failed",
+            "details"   => "OpenID message: "  . $response->message,
+            "loglevel"  => EVENTLOG_LVL_INFO,
+            "category"  => EVENTLOG_CAT_MODULE
+        ));
+    }
+
     return;
 }
 

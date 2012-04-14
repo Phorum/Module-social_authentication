@@ -54,7 +54,7 @@ function phorum_mod_social_authentication_url_build(
         in_array('_sas=complete', $query_params, TRUE))
     {
         $wrapped = '_saw=' .
-                   urlencode(implode(",", $query_params));
+                   base64_encode(implode(",", $query_params));
         $url = phorum_api_url(PHORUM_LOGIN_ACTION_URL, $wrapped);
     }
 
@@ -70,16 +70,35 @@ function phorum_mod_social_authentication_parse_request()
 {
     global $PHORUM;
 
-    // Backup the query string for the OpenID modules, which access the
-    // query string directly.
-    $PHORUM['MOD_SOCIAL_AUTHENTICATION_QUERY_STRING'] =
-        isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
-
     // Fix the query string for Phorum use.
+    $query = $_SERVER['QUERY_STRING'];
     if (isset($_GET['_saw'])) {
-        $_SERVER['QUERY_STRING'] =
-            urldecode($_GET['_saw']);
+        $_SERVER['QUERY_STRING'] = base64_decode($_GET['_saw']);
+        unset($_GET['_saw']);
     }
+
+    // Prepare the query string for the OpenID modules, which access the
+    // query string directly.
+    $params = array();
+    if (trim($query) !== '')
+    {
+        $parts = explode("&", $query);
+        foreach ($parts as $part) {
+            $parts = explode("=", $part, 2);
+            if (count($parts) != 2) {
+                continue;
+            }
+            list($k, $v) = $parts;
+            if ($k == '_saw') continue;
+            $params[urldecode($k)] = urldecode($v);
+        }
+    }
+
+    $parts = array();
+    foreach ($params as $k => $v) {
+        $parts[] = urlencode($k) . '=' . urlencode($v);
+    }
+    $PHORUM['MOD_SOCIAL_AUTHENTICATION_QUERY_STRING'] = implode("&", $parts);
 }
 
 /**
